@@ -1,0 +1,34 @@
+.workspace-tabs {
+  display: flex;
+  gap: 2px;
+}
+
+.workspace-tabs__btn {
+  padding: 4px 10px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-tertiary);
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.workspace-tabs__btn:hover {
+  color: var(--text-primary);
+}
+
+.workspace-tabs__btn[data-active="true"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.workspace-view {
+  display: none;
+  height: 100%;
+}
+
+.workspace-view[data-active="true"] {
+  display: block;
+}

@@ -1,0 +1,47 @@
+.note-editor {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-3);
+  gap: var(--space-2);
+}
+
+.note-editor__title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.note-editor__title {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.note-editor__content {
+  flex: 1;
+  min-height: 0;
+  resize: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--background);
+  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1.6;
+  padding: var(--space-2);
+}
+
+.note-editor__content::placeholder {
+  color: var(--text-tertiary);
+}
+
+.note-editor__actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}

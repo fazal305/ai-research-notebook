@@ -1,0 +1,97 @@
+.app-shell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+}
+
+.app-shell__body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: var(--sidebar-width) 1fr var(--ai-panel-width);
+}
+
+.app-shell__panel {
+  min-height: 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.app-shell__sidebar {
+  border-right: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.app-shell__workspace {
+  background: var(--background);
+}
+
+.app-shell__ai {
+  border-left: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.app-shell__mobile-tabs {
+  display: none;
+}
+
+/* ---- Tablet: keep 2 columns, fold the AI panel under the workspace ---- */
+@media (max-width: 1080px) {
+  .app-shell__body {
+    grid-template-columns: 220px 1fr;
+  }
+
+  .app-shell__ai {
+    grid-column: 1 / -1;
+    border-left: none;
+    border-top: 1px solid var(--border);
+    max-height: 45vh;
+  }
+}
+
+/* ---- Mobile: one panel at a time behind a bottom tab bar ---- */
+@media (max-width: 768px) {
+  .app-shell__body {
+    display: block;
+    position: relative;
+    height: 100%;
+  }
+
+  .app-shell__panel {
+    display: none;
+    height: 100%;
+    max-height: none;
+    border: none;
+  }
+
+  .app-shell__panel[data-mobile-active="true"] {
+    display: flex;
+  }
+
+  .app-shell__mobile-tabs {
+    display: flex;
+    flex-shrink: 0;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .app-shell__mobile-tab {
+    flex: 1;
+    padding: var(--space-3) var(--space-2);
+    background: transparent;
+    border: none;
+    border-top: 2px solid transparent;
+    color: var(--text-tertiary);
+    font-size: 12.5px;
+    font-weight: 500;
+  }
+
+  .app-shell__mobile-tab[data-active="true"] {
+    color: var(--accent);
+    border-top-color: var(--accent);
+  }
+}

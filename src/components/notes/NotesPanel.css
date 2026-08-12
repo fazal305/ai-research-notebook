@@ -1,0 +1,36 @@
+.notes-panel {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.notes-panel__toolbar {
+  flex-shrink: 0;
+  display: flex;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-bottom: 1px solid var(--border);
+}
+
+.notes-panel__toolbar .search-input {
+  flex: 1;
+}
+
+.notes-panel__list {
+  flex-shrink: 0;
+  max-height: 160px;
+  overflow-y: auto;
+  border-bottom: 1px solid var(--border);
+}
+
+.notes-panel__editor {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.notes-panel__editor > * {
+  flex: 1;
+  min-width: 0;
+}

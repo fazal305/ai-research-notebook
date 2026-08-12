@@ -1,0 +1,16 @@
+.save-indicator {
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+}
+
+.save-indicator--saving {
+  color: var(--warning);
+}
+
+.save-indicator--saved {
+  color: var(--success);
+}
+
+.save-indicator--error {
+  color: var(--danger);
+}

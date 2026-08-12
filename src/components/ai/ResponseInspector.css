@@ -1,0 +1,32 @@
+.response-inspector {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px dashed var(--border);
+}
+
+.response-inspector__item {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.response-inspector__item--wide {
+  grid-column: 1 / -1;
+}
+
+.response-inspector__item dt {
+  font-size: 10.5px;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.response-inspector__item dd {
+  margin: 0;
+  font-size: 12.5px;
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+}

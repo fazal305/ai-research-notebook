@@ -1,0 +1,116 @@
+.doc-item {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid var(--border);
+}
+
+.doc-item__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  padding: var(--space-2) var(--space-3);
+  background: transparent;
+  border: none;
+  text-align: left;
+}
+
+.doc-item[data-selected="true"] .doc-item__main {
+  background: var(--accent-soft);
+}
+
+.doc-item__main:hover {
+  background: var(--surface-hover);
+}
+
+.doc-item[data-selected="true"] .doc-item__main:hover {
+  background: var(--accent-soft);
+}
+
+.doc-item__title {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.doc-item__rename-input {
+  width: 100%;
+  padding: 2px 4px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  font-size: 13px;
+}
+
+.doc-item__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 11px;
+  color: var(--text-tertiary);
+}
+
+.doc-item__badge {
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: var(--surface-hover);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.doc-item__actions {
+  display: none;
+  align-items: center;
+  gap: 2px;
+  padding-right: var(--space-2);
+  flex-shrink: 0;
+}
+
+.doc-item:hover .doc-item__actions,
+.doc-item:focus-within .doc-item__actions {
+  display: flex;
+}
+
+.doc-item__icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  font-size: 12px;
+}
+
+/* Excludes the armed (danger-variant) confirm-delete state, which should
+   keep Button.css's red instead of being flattened to the neutral color. */
+.doc-item__icon-btn:not(.btn--danger) {
+  color: var(--text-tertiary);
+}
+
+.doc-item__icon-btn:not(.btn--danger):hover {
+  background: var(--surface-hover);
+  color: var(--text-primary);
+}
+
+.doc-item__icon-btn.btn--danger:hover {
+  background: var(--danger-soft);
+}
+
+@media (max-width: 768px) {
+  .doc-item__actions {
+    display: flex;
+  }
+}

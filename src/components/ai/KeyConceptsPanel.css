@@ -1,0 +1,103 @@
+.key-concepts-panel {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--border);
+}
+
+.key-concepts-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+}
+
+.key-concepts-panel__heading {
+  font-size: 11.5px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-secondary);
+}
+
+.key-concepts-panel__preference {
+  display: inline-flex;
+  gap: 2px;
+  padding: 2px;
+  margin-bottom: var(--space-3);
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.key-concepts-panel__preference button {
+  padding: 3px 10px;
+  border: none;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--text-tertiary);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.key-concepts-panel__preference button[data-active="true"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.key-concepts-panel__hint {
+  font-size: 12px;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+.key-concepts-panel__error {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: 12.5px;
+  color: var(--danger);
+}
+
+.key-concepts-panel__routing {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: 11.5px;
+  color: var(--text-tertiary);
+  margin-bottom: var(--space-3);
+}
+
+.key-concepts-panel__badge {
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.key-concepts-panel__badge--local {
+  background: var(--success-soft);
+  color: var(--success);
+}
+
+.key-concepts-panel__badge--cloud {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.key-concepts-panel__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.key-concepts-panel__chip {
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-primary);
+}
