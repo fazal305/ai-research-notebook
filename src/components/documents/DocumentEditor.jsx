@@ -1,8 +1,8 @@
-import { SaveIndicator } from '../common/SaveIndicator.jsx'
-import { useAutosaveField } from '../../hooks/useAutosaveField.js'
-import { textStats } from '../../utils/textUtils.js'
-import { formatBytes } from '../../utils/fileUtils.js'
-import './DocumentEditor.css'
+import { SaveIndicator } from "../common/SaveIndicator.jsx";
+import { useAutosaveField } from "../../hooks/useAutosaveField.js";
+import { textStats } from "../../utils/textUtils.js";
+import { formatBytes } from "../../utils/fileUtils.js";
+import "./DocumentEditor.css";
 
 /**
  * The document body editor. Rendered inside WorkspacePanel, which remounts
@@ -10,14 +10,18 @@ import './DocumentEditor.css'
  * useAutosaveField's docstring for why that matters.
  */
 export function DocumentEditor({ doc, updateDocument }) {
-  const [title, setTitle] = useAutosaveField(doc.title, (value) => updateDocument(doc.id, { title: value }), 800)
+  const [title, setTitle] = useAutosaveField(
+    doc.title,
+    (value) => updateDocument(doc.id, { title: value }),
+    800,
+  );
   const [content, setContent, contentSaveState] = useAutosaveField(
     doc.content,
     (value) => updateDocument(doc.id, { content: value }),
     600,
-  )
+  );
 
-  const stats = textStats(content)
+  const stats = textStats(content);
 
   return (
     <div className="doc-editor">
@@ -47,5 +51,5 @@ export function DocumentEditor({ doc, updateDocument }) {
         aria-label="Document content"
       />
     </div>
-  )
+  );
 }

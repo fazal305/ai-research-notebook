@@ -1,12 +1,22 @@
-import { StatusBadge } from '../common/StatusBadge.jsx'
-import { useTheme } from '../../hooks/useTheme.js'
-import './AppHeader.css'
+import { StatusBadge } from "../common/StatusBadge.jsx";
+import { useTheme } from "../../hooks/useTheme.js";
+import "./AppHeader.css";
 
-const THEME_ICON = { light: '☀', dark: '☾', system: '◐' }
-const THEME_LABEL = { light: 'Light theme', dark: 'Dark theme', system: 'System theme' }
+const THEME_ICON = { light: "☀", dark: "☾", system: "◐" };
+const THEME_LABEL = {
+  light: "Light theme",
+  dark: "Dark theme",
+  system: "System theme",
+};
 
-export function AppHeader({ statusLabel, statusTone, onOpenCommandPalette, onOpenHistory, onOpenSettings }) {
-  const { theme, cycleTheme } = useTheme()
+export function AppHeader({
+  statusLabel,
+  statusTone,
+  onOpenCommandPalette,
+  onOpenHistory,
+  onOpenSettings,
+}) {
+  const { theme, cycleTheme } = useTheme();
 
   return (
     <header className="app-header">
@@ -58,5 +68,5 @@ export function AppHeader({ statusLabel, statusTone, onOpenCommandPalette, onOpe
         </button>
       </div>
     </header>
-  )
+  );
 }

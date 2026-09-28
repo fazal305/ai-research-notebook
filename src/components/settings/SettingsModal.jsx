@@ -1,21 +1,40 @@
-import { Modal } from '../common/Modal.jsx'
-import { Button } from '../common/Button.jsx'
-import { useTheme } from '../../hooks/useTheme.js'
-import './SettingsModal.css'
+import { Modal } from "../common/Modal.jsx";
+import { Button } from "../common/Button.jsx";
+import { useTheme } from "../../hooks/useTheme.js";
+import "./SettingsModal.css";
 
-const THEME_LABELS = { light: 'Light', dark: 'Dark', system: 'System' }
-const AI_PREFERENCE_LABELS = { auto: 'Automatic', local: 'Local only', cloud: 'Cloud only' }
+const THEME_LABELS = { light: "Light", dark: "Dark", system: "System" };
+const AI_PREFERENCE_LABELS = {
+  auto: "Automatic",
+  local: "Local only",
+  cloud: "Cloud only",
+};
 
 const SHORTCUTS = [
-  { keys: 'Ctrl + K', description: 'Open command palette' },
-  { keys: 'Ctrl + S', description: 'Force-save the current document or note' },
-  { keys: 'Ctrl + O', description: 'Import a document' },
-  { keys: 'Ctrl + Enter', description: 'Analyze the current document (sentiment)' },
-  { keys: 'Esc', description: 'Close a modal or the command palette' },
-]
+  { keys: "Ctrl + K", description: "Open command palette" },
+  { keys: "Ctrl + S", description: "Force-save the current document or note" },
+  { keys: "Ctrl + O", description: "Import a document" },
+  {
+    keys: "Ctrl + Enter",
+    description: "Analyze the current document (sentiment)",
+  },
+  { keys: "Esc", description: "Close a modal or the command palette" },
+];
 
-export function SettingsModal({ isOpen, onClose, onExportSession, onImportSession }) {
-  const { theme, setTheme, themes, aiPreference, setAIPreference, aiPreferences } = useTheme()
+export function SettingsModal({
+  isOpen,
+  onClose,
+  onExportSession,
+  onImportSession,
+}) {
+  const {
+    theme,
+    setTheme,
+    themes,
+    aiPreference,
+    setAIPreference,
+    aiPreferences,
+  } = useTheme();
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} title="Settings">
@@ -39,7 +58,8 @@ export function SettingsModal({ isOpen, onClose, onExportSession, onImportSessio
         <section className="settings-modal__section">
           <h3>AI Provider</h3>
           <p className="settings-modal__hint">
-            Controls which provider "Key Concepts" uses when set to Automatic elsewhere in the app.
+            Controls which provider "Key Concepts" uses when set to Automatic
+            elsewhere in the app.
           </p>
           <div className="settings-modal__options">
             {aiPreferences.map((option) => (
@@ -58,13 +78,24 @@ export function SettingsModal({ isOpen, onClose, onExportSession, onImportSessio
         <section className="settings-modal__section">
           <h3>Research Data</h3>
           <p className="settings-modal__hint">
-            Export everything — documents, notes, and AI history — as one file, or restore from a previous export.
+            Export everything — documents, notes, and AI history — as one file,
+            or restore from a previous export.
           </p>
           <div className="settings-modal__data-actions">
-            <Button type="button" variant="secondary" size="sm" onClick={onExportSession}>
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={onExportSession}
+            >
               Export Research Session
             </Button>
-            <Button type="button" variant="secondary" size="sm" onClick={onImportSession}>
+            <Button
+              type="button"
+              variant="secondary"
+              size="sm"
+              onClick={onImportSession}
+            >
               Import Research Session
             </Button>
           </div>
@@ -85,5 +116,5 @@ export function SettingsModal({ isOpen, onClose, onExportSession, onImportSessio
         </section>
       </div>
     </Modal>
-  )
+  );
 }

@@ -24,11 +24,11 @@
  * from the cloud model's actual comprehension.
  */
 
-const LOCAL_WORD_COUNT_THRESHOLD = 300
+const LOCAL_WORD_COUNT_THRESHOLD = 300;
 
 function countWords(text) {
-  const trimmed = text.trim()
-  return trimmed ? trimmed.split(/\s+/).length : 0
+  const trimmed = text.trim();
+  return trimmed ? trimmed.split(/\s+/).length : 0;
 }
 
 /**
@@ -38,31 +38,38 @@ function countWords(text) {
  * @returns {{ provider: 'local'|'cloud', reason: string }}
  */
 export function routeKeyConcepts(text, preference, isOnline) {
-  if (preference === 'local') {
-    return { provider: 'local', reason: 'Forced to Local by your settings.' }
+  if (preference === "local") {
+    return { provider: "local", reason: "Forced to Local by your settings." };
   }
 
-  if (preference === 'cloud') {
+  if (preference === "cloud") {
     if (!isOnline) {
-      return { provider: 'local', reason: "Cloud was requested, but you're offline — falling back to Local." }
+      return {
+        provider: "local",
+        reason:
+          "Cloud was requested, but you're offline — falling back to Local.",
+      };
     }
-    return { provider: 'cloud', reason: 'Forced to Cloud by your settings.' }
+    return { provider: "cloud", reason: "Forced to Cloud by your settings." };
   }
 
   // 'auto'
   if (!isOnline) {
-    return { provider: 'local', reason: "Automatic: you're offline, so Local is used." }
+    return {
+      provider: "local",
+      reason: "Automatic: you're offline, so Local is used.",
+    };
   }
 
-  const wordCount = countWords(text)
+  const wordCount = countWords(text);
   if (wordCount <= LOCAL_WORD_COUNT_THRESHOLD) {
     return {
-      provider: 'local',
+      provider: "local",
       reason: `Automatic: short document (${wordCount} words) — Local extraction is fast and sufficient.`,
-    }
+    };
   }
   return {
-    provider: 'cloud',
+    provider: "cloud",
     reason: `Automatic: longer document (${wordCount} words) — Cloud AI gives more nuanced concepts.`,
-  }
+  };
 }

@@ -1,4 +1,4 @@
-import { openDB } from 'idb'
+import { openDB } from "idb";
 
 /**
  * Single IndexedDB database for the whole app. All persistence — documents,
@@ -14,40 +14,40 @@ import { openDB } from 'idb'
  *                exception — it lives in localStorage, see SettingsContext)
  */
 
-export const DB_NAME = 'ai-research-notebook'
-export const DB_VERSION = 1
+export const DB_NAME = "ai-research-notebook";
+export const DB_VERSION = 1;
 
 export class StorageError extends Error {
   constructor(message, cause) {
-    super(message)
-    this.name = 'StorageError'
-    this.cause = cause
+    super(message);
+    this.name = "StorageError";
+    this.cause = cause;
   }
 }
 
-let dbPromise = null
+let dbPromise = null;
 
 function upgrade(db) {
-  if (!db.objectStoreNames.contains('documents')) {
-    const store = db.createObjectStore('documents', { keyPath: 'id' })
-    store.createIndex('updatedAt', 'updatedAt')
-    store.createIndex('title', 'title')
+  if (!db.objectStoreNames.contains("documents")) {
+    const store = db.createObjectStore("documents", { keyPath: "id" });
+    store.createIndex("updatedAt", "updatedAt");
+    store.createIndex("title", "title");
   }
 
-  if (!db.objectStoreNames.contains('notes')) {
-    const store = db.createObjectStore('notes', { keyPath: 'id' })
-    store.createIndex('documentId', 'documentId')
-    store.createIndex('updatedAt', 'updatedAt')
+  if (!db.objectStoreNames.contains("notes")) {
+    const store = db.createObjectStore("notes", { keyPath: "id" });
+    store.createIndex("documentId", "documentId");
+    store.createIndex("updatedAt", "updatedAt");
   }
 
-  if (!db.objectStoreNames.contains('aiHistory')) {
-    const store = db.createObjectStore('aiHistory', { keyPath: 'id' })
-    store.createIndex('documentId', 'documentId')
-    store.createIndex('timestamp', 'timestamp')
+  if (!db.objectStoreNames.contains("aiHistory")) {
+    const store = db.createObjectStore("aiHistory", { keyPath: "id" });
+    store.createIndex("documentId", "documentId");
+    store.createIndex("timestamp", "timestamp");
   }
 
-  if (!db.objectStoreNames.contains('settings')) {
-    db.createObjectStore('settings', { keyPath: 'key' })
+  if (!db.objectStoreNames.contains("settings")) {
+    db.createObjectStore("settings", { keyPath: "key" });
   }
 }
 
@@ -62,20 +62,22 @@ export function getDB() {
     dbPromise = openDB(DB_NAME, DB_VERSION, {
       upgrade,
       blocked() {
-        console.warn('IndexedDB upgrade blocked by another open tab of this app.')
+        console.warn(
+          "IndexedDB upgrade blocked by another open tab of this app.",
+        );
       },
       blocking() {
         // Another tab wants to upgrade; release our connection so it can.
-        dbPromise?.then((db) => db.close())
-        dbPromise = null
+        dbPromise?.then((db) => db.close());
+        dbPromise = null;
       },
       terminated() {
-        dbPromise = null
+        dbPromise = null;
       },
     }).catch((cause) => {
-      dbPromise = null
-      throw new StorageError('Failed to open the local database.', cause)
-    })
+      dbPromise = null;
+      throw new StorageError("Failed to open the local database.", cause);
+    });
   }
-  return dbPromise
+  return dbPromise;
 }

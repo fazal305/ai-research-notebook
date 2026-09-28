@@ -1,6 +1,6 @@
-import { Spinner } from '../common/Spinner.jsx'
-import { Button } from '../common/Button.jsx'
-import './AppStatusScreen.css'
+import { Spinner } from "../common/Spinner.jsx";
+import { Button } from "../common/Button.jsx";
+import "./AppStatusScreen.css";
 
 /** Full-screen loading state shown while the local database is opening. */
 export function AppLoadingScreen() {
@@ -8,7 +8,7 @@ export function AppLoadingScreen() {
     <div className="app-status-screen">
       <Spinner size={22} label="Opening local database…" />
     </div>
-  )
+  );
 }
 
 /**
@@ -24,13 +24,14 @@ export function AppErrorScreen({ error, onRetry }) {
       <div className="app-status-screen__card">
         <p className="app-status-screen__title">Local storage unavailable</p>
         <p className="app-status-screen__description">
-          {error?.message ?? 'The browser refused to open the local database.'} This can happen in
-          private/incognito browsing or if storage permissions are blocked for this site.
+          {error?.message ?? "The browser refused to open the local database."}{" "}
+          This can happen in private/incognito browsing or if storage
+          permissions are blocked for this site.
         </p>
         <Button variant="primary" onClick={onRetry}>
           Retry
         </Button>
       </div>
     </div>
-  )
+  );
 }

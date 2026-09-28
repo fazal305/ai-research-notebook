@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
-import * as notesRepository from '../services/storage/notesRepository.js'
-import * as historyRepository from '../services/storage/historyRepository.js'
-import { countWords } from '../utils/textUtils.js'
+import { useEffect, useState } from "react";
+import * as notesRepository from "../services/storage/notesRepository.js";
+import * as historyRepository from "../services/storage/historyRepository.js";
+import { countWords } from "../utils/textUtils.js";
 
 /**
  * Aggregates real dashboard numbers from IndexedDB. Documents come from
@@ -13,46 +13,61 @@ import { countWords } from '../utils/textUtils.js'
  * estimated or hardcoded.
  */
 export function useDashboardStats(documents) {
-  const [notes, setNotes] = useState([])
-  const [history, setHistory] = useState([])
-  const [status, setStatus] = useState('loading')
+  const [notes, setNotes] = useState([]);
+  const [history, setHistory] = useState([]);
+  const [status, setStatus] = useState("loading");
 
   useEffect(() => {
-    let cancelled = false
-    setStatus('loading')
+    let cancelled = false;
+    setStatus("loading");
 
     Promise.all([notesRepository.listNotes(), historyRepository.listHistory()])
       .then(([notesList, historyList]) => {
-        if (cancelled) return
-        setNotes(notesList)
-        setHistory(historyList)
-        setStatus('ready')
+        if (cancelled) return;
+        setNotes(notesList);
+        setHistory(historyList);
+        setStatus("ready");
       })
       .catch(() => {
-        if (!cancelled) setStatus('error')
-      })
+        if (!cancelled) setStatus("error");
+      });
 
     return () => {
-      cancelled = true
-    }
-  }, [])
+      cancelled = true;
+    };
+  }, []);
 
-  const totalWords = documents.reduce((sum, doc) => sum + countWords(doc.content), 0)
+  const totalWords = documents.reduce(
+    (sum, doc) => sum + countWords(doc.content),
+    0,
+  );
 
-  const recentDocuments = [...documents].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)).slice(0, 5)
-  const recentAnalyses = [...history].sort((a, b) => b.timestamp.localeCompare(a.timestamp)).slice(0, 5)
+  const recentDocuments = [...documents]
+    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
+    .slice(0, 5);
+  const recentAnalyses = [...history]
+    .sort((a, b) => b.timestamp.localeCompare(a.timestamp))
+    .slice(0, 5);
 
-  const topicCounts = new Map()
+  const topicCounts = new Map();
   for (const entry of history) {
-    if (entry.operation !== 'key-concepts' || entry.status !== 'complete' || !entry.response) continue
-    for (const topic of entry.response.split(',').map((t) => t.trim()).filter(Boolean)) {
-      topicCounts.set(topic, (topicCounts.get(topic) ?? 0) + 1)
+    if (
+      entry.operation !== "key-concepts" ||
+      entry.status !== "complete" ||
+      !entry.response
+    )
+      continue;
+    for (const topic of entry.response
+      .split(",")
+      .map((t) => t.trim())
+      .filter(Boolean)) {
+      topicCounts.set(topic, (topicCounts.get(topic) ?? 0) + 1);
     }
   }
   const mostUsedTopics = [...topicCounts.entries()]
     .sort((a, b) => b[1] - a[1])
     .slice(0, 8)
-    .map(([term, count]) => ({ term, count }))
+    .map(([term, count]) => ({ term, count }));
 
   return {
     status,
@@ -63,5 +78,5 @@ export function useDashboardStats(documents) {
     recentDocuments,
     recentAnalyses,
     mostUsedTopics,
-  }
+  };
 }

@@ -1,10 +1,10 @@
-import { localAIProvider } from './localAIProvider.js'
-import { cloudAIProvider } from './cloudAIProvider.js'
-import { routeKeyConcepts } from './aiRouter.js'
-import { SENTIMENT_MODEL_ID } from './constants.js'
-import * as historyRepository from '../storage/historyRepository.js'
+import { localAIProvider } from "./localAIProvider.js";
+import { cloudAIProvider } from "./cloudAIProvider.js";
+import { routeKeyConcepts } from "./aiRouter.js";
+import { SENTIMENT_MODEL_ID } from "./constants.js";
+import * as historyRepository from "../storage/historyRepository.js";
 
-const PROMPT_PREVIEW_CHARS = 300
+const PROMPT_PREVIEW_CHARS = 300;
 
 /**
  * Every AI operation gets one history entry, win or lose — this is the
@@ -13,14 +13,14 @@ const PROMPT_PREVIEW_CHARS = 300
  */
 async function recordHistory(entry) {
   try {
-    await historyRepository.addHistoryEntry(entry)
+    await historyRepository.addHistoryEntry(entry);
   } catch (err) {
-    console.error('Failed to record AI history entry:', err)
+    console.error("Failed to record AI history entry:", err);
   }
 }
 
 function statusForError(err) {
-  return err?.name === 'AbortError' ? 'cancelled' : 'error'
+  return err?.name === "AbortError" ? "cancelled" : "error";
 }
 
 /**
@@ -35,27 +35,29 @@ export const aiService = {
    * design, not by omission.
    */
   async analyzeSentiment(text, { onProgress, documentId, documentTitle } = {}) {
-    const startedAt = performance.now()
+    const startedAt = performance.now();
     const base = {
       documentId,
       documentTitle,
-      operation: 'sentiment',
-      provider: 'local',
+      operation: "sentiment",
+      provider: "local",
       model: SENTIMENT_MODEL_ID,
       prompt: text.slice(0, PROMPT_PREVIEW_CHARS),
-    }
+    };
 
     try {
-      const result = await localAIProvider.analyzeSentiment(text, { onProgress })
-      const durationMs = performance.now() - startedAt
+      const result = await localAIProvider.analyzeSentiment(text, {
+        onProgress,
+      });
+      const durationMs = performance.now() - startedAt;
       await recordHistory({
         ...base,
         response: `${result.label} (${Math.round(result.score * 100)}%)`,
-        status: 'complete',
+        status: "complete",
         durationMs,
         tokenUsage: null,
-      })
-      return { ...result, durationMs }
+      });
+      return { ...result, durationMs };
     } catch (err) {
       await recordHistory({
         ...base,
@@ -64,8 +66,8 @@ export const aiService = {
         durationMs: performance.now() - startedAt,
         tokenUsage: null,
         error: err.message,
-      })
-      throw err
+      });
+      throw err;
     }
   },
 
@@ -75,29 +77,29 @@ export const aiService = {
    * a deterministic local summarizer would just be truncation.
    */
   async summarize(text, { onChunk, signal, documentId, documentTitle } = {}) {
-    const startedAt = performance.now()
+    const startedAt = performance.now();
     const base = {
       documentId,
       documentTitle,
-      operation: 'summary',
-      provider: 'cloud',
+      operation: "summary",
+      provider: "cloud",
       prompt: text.slice(0, PROMPT_PREVIEW_CHARS),
-    }
+    };
 
     try {
-      const result = await cloudAIProvider.summarize(text, { onChunk, signal })
-      const durationMs = performance.now() - startedAt
+      const result = await cloudAIProvider.summarize(text, { onChunk, signal });
+      const durationMs = performance.now() - startedAt;
       await recordHistory({
         ...base,
         model: result.model,
         response: result.text,
-        status: 'complete',
+        status: "complete",
         durationMs,
         tokenUsage: result.usage,
-      })
-      return { ...result, durationMs }
+      });
+      return { ...result, durationMs };
     } catch (err) {
-      const status = statusForError(err)
+      const status = statusForError(err);
       await recordHistory({
         ...base,
         model: null,
@@ -105,9 +107,9 @@ export const aiService = {
         status,
         durationMs: performance.now() - startedAt,
         tokenUsage: null,
-        error: status === 'error' ? err.message : null,
-      })
-      throw err
+        error: status === "error" ? err.message : null,
+      });
+      throw err;
     }
   },
 
@@ -118,39 +120,64 @@ export const aiService = {
    * regardless of which provider ran: { concepts, provider, reason,
    * model, usage, durationMs }.
    */
-  async extractKeyConcepts(text, { preference = 'auto', isOnline = true, onProgress, signal, documentId, documentTitle } = {}) {
-    const { provider, reason } = routeKeyConcepts(text, preference, isOnline)
-    const startedAt = performance.now()
+  async extractKeyConcepts(
+    text,
+    {
+      preference = "auto",
+      isOnline = true,
+      onProgress,
+      signal,
+      documentId,
+      documentTitle,
+    } = {},
+  ) {
+    const { provider, reason } = routeKeyConcepts(text, preference, isOnline);
+    const startedAt = performance.now();
     const base = {
       documentId,
       documentTitle,
-      operation: 'key-concepts',
+      operation: "key-concepts",
       provider,
       prompt: text.slice(0, PROMPT_PREVIEW_CHARS),
-    }
+    };
 
     try {
-      let outcome
-      if (provider === 'local') {
-        const keywords = await localAIProvider.extractKeyConcepts(text)
-        outcome = { concepts: keywords.map((k) => k.term), provider, reason, model: null, usage: null }
+      let outcome;
+      if (provider === "local") {
+        const keywords = await localAIProvider.extractKeyConcepts(text);
+        outcome = {
+          concepts: keywords.map((k) => k.term),
+          provider,
+          reason,
+          model: null,
+          usage: null,
+        };
       } else {
-        const result = await cloudAIProvider.extractKeyConcepts(text, { onChunk: onProgress, signal })
-        outcome = { concepts: result.concepts, provider, reason, model: result.model, usage: result.usage }
+        const result = await cloudAIProvider.extractKeyConcepts(text, {
+          onChunk: onProgress,
+          signal,
+        });
+        outcome = {
+          concepts: result.concepts,
+          provider,
+          reason,
+          model: result.model,
+          usage: result.usage,
+        };
       }
 
-      const durationMs = performance.now() - startedAt
+      const durationMs = performance.now() - startedAt;
       await recordHistory({
         ...base,
         model: outcome.model,
-        response: outcome.concepts.join(', '),
-        status: 'complete',
+        response: outcome.concepts.join(", "),
+        status: "complete",
         durationMs,
         tokenUsage: outcome.usage,
-      })
-      return { ...outcome, durationMs }
+      });
+      return { ...outcome, durationMs };
     } catch (err) {
-      const status = statusForError(err)
+      const status = statusForError(err);
       await recordHistory({
         ...base,
         model: null,
@@ -158,14 +185,14 @@ export const aiService = {
         status,
         durationMs: performance.now() - startedAt,
         tokenUsage: null,
-        error: status === 'error' ? err.message : null,
-      })
-      throw err
+        error: status === "error" ? err.message : null,
+      });
+      throw err;
     }
   },
-}
+};
 
 export const providers = {
   local: localAIProvider,
   cloud: cloudAIProvider,
-}
+};

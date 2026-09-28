@@ -1,4 +1,4 @@
-import './EmptyState.css'
+import "./EmptyState.css";
 
 /**
  * Reusable "nothing here yet" panel. Used instead of leaving blank space
@@ -9,8 +9,10 @@ export function EmptyState({ title, description, action }) {
   return (
     <div className="empty-state">
       <p className="empty-state__title">{title}</p>
-      {description ? <p className="empty-state__description">{description}</p> : null}
+      {description ? (
+        <p className="empty-state__description">{description}</p>
+      ) : null}
       {action ? <div className="empty-state__action">{action}</div> : null}
     </div>
-  )
+  );
 }

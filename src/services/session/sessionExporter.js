@@ -1,11 +1,11 @@
-import { downloadTextFile } from '../../utils/fileUtils.js'
-import * as documentRepository from '../storage/documentRepository.js'
-import * as notesRepository from '../storage/notesRepository.js'
-import * as historyRepository from '../storage/historyRepository.js'
-import * as settingsRepository from '../storage/settingsRepository.js'
+import { downloadTextFile } from "../../utils/fileUtils.js";
+import * as documentRepository from "../storage/documentRepository.js";
+import * as notesRepository from "../storage/notesRepository.js";
+import * as historyRepository from "../storage/historyRepository.js";
+import * as settingsRepository from "../storage/settingsRepository.js";
 
-export const SESSION_FORMAT = 'ai-research-notebook-session'
-export const SESSION_VERSION = 1
+export const SESSION_FORMAT = "ai-research-notebook-session";
+export const SESSION_VERSION = 1;
 
 /** Bundles every document, note, AI history entry, and setting into one downloadable file. */
 export async function exportSession() {
@@ -14,7 +14,7 @@ export async function exportSession() {
     notesRepository.listNotes(),
     historyRepository.listHistory(),
     settingsRepository.getAllSettings(),
-  ])
+  ]);
 
   const session = {
     format: SESSION_FORMAT,
@@ -24,13 +24,17 @@ export async function exportSession() {
     notes,
     history,
     settings,
-  }
+  };
 
-  downloadTextFile('research-session.json', JSON.stringify(session, null, 2), 'application/json')
+  downloadTextFile(
+    "research-session.json",
+    JSON.stringify(session, null, 2),
+    "application/json",
+  );
 
   return {
     documentCount: documents.length,
     noteCount: notes.length,
     historyCount: history.length,
-  }
+  };
 }

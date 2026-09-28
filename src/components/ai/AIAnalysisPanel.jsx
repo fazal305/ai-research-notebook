@@ -1,24 +1,27 @@
-import { PanelSection } from '../layout/PanelSection.jsx'
-import { EmptyState } from '../common/EmptyState.jsx'
-import { TextStatisticsPanel } from './TextStatisticsPanel.jsx'
-import { SummaryPanel } from './SummaryPanel.jsx'
-import { SentimentPanel } from './SentimentPanel.jsx'
-import { KeyConceptsPanel } from './KeyConceptsPanel.jsx'
-import { useResearch } from '../../hooks/useResearch.js'
+import { PanelSection } from "../layout/PanelSection.jsx";
+import { EmptyState } from "../common/EmptyState.jsx";
+import { TextStatisticsPanel } from "./TextStatisticsPanel.jsx";
+import { SummaryPanel } from "./SummaryPanel.jsx";
+import { SentimentPanel } from "./SentimentPanel.jsx";
+import { KeyConceptsPanel } from "./KeyConceptsPanel.jsx";
+import { useResearch } from "../../hooks/useResearch.js";
 
 export function AIAnalysisPanel() {
-  const { selectedDocument } = useResearch()
+  const { selectedDocument } = useResearch();
 
   if (!selectedDocument) {
     return (
       <PanelSection title="AI Analysis">
-        <EmptyState title="No document selected" description="Select a document to enable AI analysis." />
+        <EmptyState
+          title="No document selected"
+          description="Select a document to enable AI analysis."
+        />
       </PanelSection>
-    )
+    );
   }
 
-  const documentId = selectedDocument.id
-  const documentTitle = selectedDocument.title
+  const documentId = selectedDocument.id;
+  const documentTitle = selectedDocument.title;
 
   return (
     <PanelSection title="AI Analysis">
@@ -44,5 +47,5 @@ export function AIAnalysisPanel() {
         documentTitle={documentTitle}
       />
     </PanelSection>
-  )
+  );
 }

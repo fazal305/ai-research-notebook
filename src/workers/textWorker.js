@@ -1,5 +1,5 @@
-import { textStats } from '../utils/textUtils.js'
-import { extractKeywords } from '../utils/keywordExtraction.js'
+import { textStats } from "../utils/textUtils.js";
+import { extractKeywords } from "../utils/keywordExtraction.js";
 
 /**
  * Runs local, non-AI text processing off the main thread: statistics and
@@ -14,24 +14,28 @@ import { extractKeywords } from '../utils/keywordExtraction.js'
  * the caller ignore stale responses from a superseded request.
  */
 self.onmessage = (event) => {
-  const { id, type, payload } = event.data ?? {}
+  const { id, type, payload } = event.data ?? {};
 
-  if (type === 'computeStats') {
+  if (type === "computeStats") {
     try {
-      const stats = textStats(payload.text)
-      self.postMessage({ id, type: 'computeStats:success', stats })
+      const stats = textStats(payload.text);
+      self.postMessage({ id, type: "computeStats:success", stats });
     } catch (err) {
-      self.postMessage({ id, type: 'computeStats:error', error: err.message })
+      self.postMessage({ id, type: "computeStats:error", error: err.message });
     }
-    return
+    return;
   }
 
-  if (type === 'extractKeywords') {
+  if (type === "extractKeywords") {
     try {
-      const keywords = extractKeywords(payload.text, { limit: payload.limit })
-      self.postMessage({ id, type: 'extractKeywords:success', keywords })
+      const keywords = extractKeywords(payload.text, { limit: payload.limit });
+      self.postMessage({ id, type: "extractKeywords:success", keywords });
     } catch (err) {
-      self.postMessage({ id, type: 'extractKeywords:error', error: err.message })
+      self.postMessage({
+        id,
+        type: "extractKeywords:error",
+        error: err.message,
+      });
     }
   }
-}
+};

@@ -1,6 +1,11 @@
-import './SearchInput.css'
+import "./SearchInput.css";
 
-export function SearchInput({ value, onChange, placeholder = 'Search…', label }) {
+export function SearchInput({
+  value,
+  onChange,
+  placeholder = "Search…",
+  label,
+}) {
   return (
     <input
       type="search"
@@ -10,5 +15,5 @@ export function SearchInput({ value, onChange, placeholder = 'Search…', label 
       onChange={(e) => onChange(e.target.value)}
       aria-label={label ?? placeholder}
     />
-  )
+  );
 }

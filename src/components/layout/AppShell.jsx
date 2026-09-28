@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import { AppHeader } from './AppHeader.jsx'
-import './AppShell.css'
+import { useState } from "react";
+import { AppHeader } from "./AppHeader.jsx";
+import "./AppShell.css";
 
 const MOBILE_PANELS = [
-  { id: 'documents', label: 'Documents' },
-  { id: 'workspace', label: 'Workspace' },
-  { id: 'ai', label: 'Analysis' },
-]
+  { id: "documents", label: "Documents" },
+  { id: "workspace", label: "Workspace" },
+  { id: "ai", label: "Analysis" },
+];
 
 /**
  * Top-level layout: header + a 3-column workspace grid (sidebar / editor /
@@ -27,7 +27,7 @@ export function AppShell({
   workspace,
   aiPanel,
 }) {
-  const [activeMobilePanel, setActiveMobilePanel] = useState('workspace')
+  const [activeMobilePanel, setActiveMobilePanel] = useState("workspace");
 
   return (
     <div className="app-shell">
@@ -42,7 +42,7 @@ export function AppShell({
       <div className="app-shell__body">
         <aside
           className="app-shell__panel app-shell__sidebar"
-          data-mobile-active={activeMobilePanel === 'documents'}
+          data-mobile-active={activeMobilePanel === "documents"}
           aria-label="Documents"
         >
           {sidebar}
@@ -50,7 +50,7 @@ export function AppShell({
 
         <main
           className="app-shell__panel app-shell__workspace"
-          data-mobile-active={activeMobilePanel === 'workspace'}
+          data-mobile-active={activeMobilePanel === "workspace"}
           aria-label="Research workspace"
         >
           {workspace}
@@ -58,7 +58,7 @@ export function AppShell({
 
         <section
           className="app-shell__panel app-shell__ai"
-          data-mobile-active={activeMobilePanel === 'ai'}
+          data-mobile-active={activeMobilePanel === "ai"}
           aria-label="AI analysis"
         >
           {aiPanel}
@@ -73,12 +73,12 @@ export function AppShell({
             className="app-shell__mobile-tab"
             data-active={activeMobilePanel === panel.id}
             onClick={() => setActiveMobilePanel(panel.id)}
-            aria-current={activeMobilePanel === panel.id ? 'page' : undefined}
+            aria-current={activeMobilePanel === panel.id ? "page" : undefined}
           >
             {panel.label}
           </button>
         ))}
       </nav>
     </div>
-  )
+  );
 }

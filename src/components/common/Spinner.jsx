@@ -1,4 +1,4 @@
-import './Spinner.css'
+import "./Spinner.css";
 
 /**
  * Generic inline spinner. Any operation expected to take longer than ~200ms
@@ -12,7 +12,11 @@ export function Spinner({ size = 16, label }) {
         style={{ width: size, height: size }}
         aria-hidden="true"
       />
-      {label ? <span className="spinner-label">{label}</span> : <span className="visually-hidden">Loading</span>}
+      {label ? (
+        <span className="spinner-label">{label}</span>
+      ) : (
+        <span className="visually-hidden">Loading</span>
+      )}
     </span>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-import { Spinner } from '../common/Spinner.jsx'
-import { useTextStats } from '../../hooks/useTextStats.js'
-import './TextStatisticsPanel.css'
+import { Spinner } from "../common/Spinner.jsx";
+import { useTextStats } from "../../hooks/useTextStats.js";
+import "./TextStatisticsPanel.css";
 
 /**
  * "Text Statistics" needs no AI model — these are plain counts — but for a
@@ -8,15 +8,15 @@ import './TextStatisticsPanel.css'
  * off the main thread. See workers/textWorker.js.
  */
 export function TextStatisticsPanel({ text }) {
-  const { stats, status, error } = useTextStats(text)
+  const { stats, status, error } = useTextStats(text);
 
   return (
     <section className="text-stats">
       <h3 className="text-stats__heading">Text Statistics</h3>
 
-      {status === 'processing' || status === 'idle' ? (
+      {status === "processing" || status === "idle" ? (
         <Spinner label="Analyzing…" />
-      ) : status === 'error' ? (
+      ) : status === "error" ? (
         <p className="text-stats__error">{error}</p>
       ) : (
         <dl className="text-stats__grid">
@@ -43,5 +43,5 @@ export function TextStatisticsPanel({ text }) {
         </dl>
       )}
     </section>
-  )
+  );
 }

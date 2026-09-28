@@ -1,4 +1,4 @@
-import './ResponseInspector.css'
+import "./ResponseInspector.css";
 
 /**
  * Shows the mechanics of an AI response rather than just its content —
@@ -7,7 +7,14 @@ import './ResponseInspector.css'
  * usage (or hasn't finished), this shows "Unavailable" rather than a
  * fabricated estimate.
  */
-export function ResponseInspector({ status, provider, model, durationMs, characters, usage }) {
+export function ResponseInspector({
+  status,
+  provider,
+  model,
+  durationMs,
+  characters,
+  usage,
+}) {
   return (
     <dl className="response-inspector">
       <div className="response-inspector__item">
@@ -20,11 +27,15 @@ export function ResponseInspector({ status, provider, model, durationMs, charact
       </div>
       <div className="response-inspector__item">
         <dt>Model</dt>
-        <dd>{model ?? 'Unavailable'}</dd>
+        <dd>{model ?? "Unavailable"}</dd>
       </div>
       <div className="response-inspector__item">
         <dt>Duration</dt>
-        <dd>{durationMs != null ? `${(durationMs / 1000).toFixed(2)}s` : 'Unavailable'}</dd>
+        <dd>
+          {durationMs != null
+            ? `${(durationMs / 1000).toFixed(2)}s`
+            : "Unavailable"}
+        </dd>
       </div>
       <div className="response-inspector__item">
         <dt>Characters</dt>
@@ -33,9 +44,11 @@ export function ResponseInspector({ status, provider, model, durationMs, charact
       <div className="response-inspector__item response-inspector__item--wide">
         <dt>Tokens (input / output)</dt>
         <dd>
-          {usage ? `${usage.input_tokens ?? '—'} / ${usage.output_tokens ?? '—'}` : 'Unavailable'}
+          {usage
+            ? `${usage.input_tokens ?? "—"} / ${usage.output_tokens ?? "—"}`
+            : "Unavailable"}
         </dd>
       </div>
     </dl>
-  )
+  );
 }

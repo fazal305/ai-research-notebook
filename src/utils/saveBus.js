@@ -4,13 +4,13 @@
  * immediately, without editors and the keyboard-shortcut handler needing
  * to know about each other directly.
  */
-const listeners = new Set()
+const listeners = new Set();
 
 export function requestFlush() {
-  for (const listener of listeners) listener()
+  for (const listener of listeners) listener();
 }
 
 export function onFlushRequest(listener) {
-  listeners.add(listener)
-  return () => listeners.delete(listener)
+  listeners.add(listener);
+  return () => listeners.delete(listener);
 }

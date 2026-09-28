@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from 'react'
-import { useDebounce } from './useDebounce.js'
-import { onFlushRequest } from '../utils/saveBus.js'
+import { useEffect, useRef, useState } from "react";
+import { useDebounce } from "./useDebounce.js";
+import { onFlushRequest } from "../utils/saveBus.js";
 
 /**
  * Local editable state for one field (a document's content, a note's
@@ -15,44 +15,44 @@ import { onFlushRequest } from '../utils/saveBus.js'
  * typed something new" apart from "the record underneath changed".
  */
 export function useAutosaveField(initialValue, onSave, delayMs = 600) {
-  const [value, setValue] = useState(initialValue)
-  const [status, setStatus] = useState('idle') // 'idle' | 'saving' | 'saved' | 'error'
-  const debounced = useDebounce(value, delayMs)
+  const [value, setValue] = useState(initialValue);
+  const [status, setStatus] = useState("idle"); // 'idle' | 'saving' | 'saved' | 'error'
+  const debounced = useDebounce(value, delayMs);
 
-  const lastSubmittedRef = useRef(initialValue)
-  const valueRef = useRef(value)
-  const isMountedRef = useRef(true)
-  valueRef.current = value
+  const lastSubmittedRef = useRef(initialValue);
+  const valueRef = useRef(value);
+  const isMountedRef = useRef(true);
+  valueRef.current = value;
 
   useEffect(() => {
-    isMountedRef.current = true
+    isMountedRef.current = true;
     return () => {
-      isMountedRef.current = false
-    }
-  }, [])
+      isMountedRef.current = false;
+    };
+  }, []);
 
   function submit(next) {
-    if (next === lastSubmittedRef.current) return
-    lastSubmittedRef.current = next
-    setStatus('saving')
+    if (next === lastSubmittedRef.current) return;
+    lastSubmittedRef.current = next;
+    setStatus("saving");
     Promise.resolve(onSave(next))
       .then(() => {
-        if (isMountedRef.current) setStatus('saved')
+        if (isMountedRef.current) setStatus("saved");
       })
       .catch(() => {
-        if (isMountedRef.current) setStatus('error')
-      })
+        if (isMountedRef.current) setStatus("error");
+      });
   }
 
   useEffect(() => {
-    submit(debounced)
+    submit(debounced);
     // Only the debounced value should retrigger this — see submit()'s own
     // dedupe against lastSubmittedRef for why `onSave` isn't a dependency.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounced])
+  }, [debounced]);
 
   // Ctrl+S: flush whatever's currently typed, bypassing the debounce.
-  useEffect(() => onFlushRequest(() => submit(valueRef.current)), [])
+  useEffect(() => onFlushRequest(() => submit(valueRef.current)), []);
 
-  return [value, setValue, status]
+  return [value, setValue, status];
 }
