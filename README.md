@@ -4,6 +4,8 @@ A local-first research workspace for browser-based document analysis — write a
 
 This is not an AI chatbot wrapper. It's a demonstration of how to architect a real browser application around local-first storage, background processing, and a genuinely hybrid (local + cloud) AI pipeline — with every failure mode handled explicitly instead of assumed away.
 
+**Live Demo:** [https://ai-research-notebook.netlify.app](https://ai-research-notebook.netlify.app)
+
 ## Overview
 
 Import or write documents, take research notes alongside them, and run AI analysis — sentiment, summarization, and key-concept extraction — using either a model running entirely in your browser or a cloud LLM, with the app deciding (or you overriding) which one makes sense for a given document. Every AI request is logged with its real cost: provider, model, duration, and token usage where available — never fabricated.
